@@ -1,0 +1,131 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyM6VYLsb3hkTVA4BhhyuI+h",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/syamkumar609/DAA/blob/main/DAA%20PRACTICAL%2011%20and%2012\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "DqEZ1zfhI-TU",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "3c21b8a9-2c7f-48a3-8f36-c904b9ba5fe9"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Enter number of vertices: 4\n",
+            "Enter the adjacency matrix:\n",
+            "Enter 99999 if there is no direct edge\n",
+            " 0 5 99999 10 99999 0 3 99999 99999 99999 0 1 99999 99999 99999 0\n"
+          ]
+        }
+      ],
+      "source": [
+        "\n",
+        "INF = 99999\n",
+        "\n",
+        "n = int(input(\"Enter number of vertices: \"))\n",
+        "\n",
+        "print(\"Enter the adjacency matrix:\")\n",
+        "print(\"Enter 99999 if there is no direct edge\")\n",
+        "\n",
+        "graph = []\n",
+        "\n",
+        "for i in range(n):\n",
+        "    row = list(map(int, input().split()))\n",
+        "    graph.append(row)\n",
+        "\n",
+        "# Floyd-Warshall Algorithm\n",
+        "for k in range(n):\n",
+        "    for i in range(n):\n",
+        "        for j in range(n):\n",
+        "            graph[i][j] = min(\n",
+        "                graph[i][j],\n",
+        "                graph[i][k] + graph[k][j]\n",
+        "            )\n",
+        "\n",
+        "# Display shortest distance\n",
+        "print(\"\\nShortest Distance Matrix:\")\n",
+        "\n",
+        "for i in range(n):\n",
+        "    for j in range(n):\n",
+        "        if graph[i][j] == INF:\n",
+        "            print(\"INF\", end=\" \")\n",
+        "        else:\n",
+        "            print(graph[i][j], end=\" \")\n",
+        "    print()\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "from itertools import permutations\n",
+        "\n",
+        "n = int(input(\"Enter number of cities: \"))\n",
+        "\n",
+        "print(\"Enter the cost matrix:\")\n",
+        "cost = []\n",
+        "\n",
+        "for i in range(n):\n",
+        "    row = list(map(int, input().split()))\n",
+        "    cost.append(row)\n",
+        "\n",
+        "min_cost = float('inf')\n",
+        "best_path = None\n",
+        "\n",
+        "# Fix city 0 as starting city\n",
+        "for path in permutations(range(1, n)):\n",
+        "\n",
+        "    route = (0,) + path + (0,)\n",
+        "    total_cost = 0\n",
+        "\n",
+        "    for i in range(n):\n",
+        "        total_cost += cost[route[i]][route[i + 1]]\n",
+        "\n",
+        "    if total_cost < min_cost:\n",
+        "        min_cost = total_cost\n",
+        "        best_path = route\n",
+        "\n",
+        "print(\"\\nMinimum Cost:\", min_cost)\n",
+        "\n",
+        "print(\"Best Route:\", end=\" \")\n",
+        "for city in best_path:\n",
+        "    print(city, end=\" \")\n"
+      ],
+      "metadata": {
+        "id": "-luluXy4KOgE"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
